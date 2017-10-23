@@ -5,6 +5,13 @@
 <div class="row">
   <div class="col-12">
     <%= form_for(@request) do |f| %>
+    <% if @request.errors.any? %>
+      <ul class = "alert alert-danger">
+        <% @request.errors.full_messages.each do |message| %>
+          <li ><%= message %></li>
+        <% end %>
+      </ul>
+      <% end %>
       <div class="form-group">
         <%= f.label :name , "Your Name *"%>
         <%= f.text_field :name, class: 'form-control' %>

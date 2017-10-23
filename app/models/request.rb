@@ -6,9 +6,12 @@ class Request < ApplicationRecord
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
     validates :email, presence: true, length: { maximum: 255 },
                       format: { with: VALID_EMAIL_REGEX }
-  validates_uniqueness_of :email, conditions: -> { where(confirmed: true) }
-  validates :phone, presence: true
-  validates :bio, presence: true
+  validates_uniqueness_of :email, conditions: -> { where("confirmed_at > ?", Time.zone.now-7948800) }
+  validates_uniqueness_of :email, conditions: -> { where(activated: false) }
+  VALID_PHONE_REGEX = /[\d\-+() ]+/
+  validates :phone, presence: true, length: { minimum: 10, maximum: 20 },
+                      format: { with: VALID_PHONE_REGEX }
+  validates :bio, presence: true, length: { maximum: 2000 }
 
   # Returns the hash digest of the given string.
   def Request.digest(string)
@@ -33,7 +36,6 @@ class Request < ApplicationRecord
   def activate
     update_attribute(:activated,    true)
     update_attribute(:activated_at, Time.zone.now)
-    update_attribute(:confirmed,    true)
     update_attribute(:confirmed_at, Time.zone.now)
   end
 
@@ -41,6 +43,7 @@ class Request < ApplicationRecord
   def send_activation_email
     RequestMailer.request_activation(self).deliver_now
   end
+
 
   # Confirmes a request.
   def confirm
