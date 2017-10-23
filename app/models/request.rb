@@ -50,9 +50,9 @@ class Request < ApplicationRecord
     update_attribute(:confirmed_at, Time.zone.now)
   end
 
-  # Sends confirmation email.
+  # Sends confirmation email in 90 days (request needs to be confirmed every quarter - 92 days max)
   def send_confirmation_email
-    RequestMailer.request_confirmation(self).deliver_now
+    RequestMailer.request_confirmation(self).deliver_later(wait_until: 90.days.from_now)
   end
 
   def accept!
