@@ -1,0 +1,18 @@
+<h1>The Cowork</h1>
+
+<p>Hi <%= @request.name %>,</p>
+
+<p>Thank you for your interest in The Cowork.</p>
+
+<p>
+You are currently number <%= @request.waitlist_position %> on our waitlist to join The Cowork. Please click the link below to confirm your enrollment :
+</p>
+
+<%= link_to "I would like to stay on the waitlist", edit_request_confirmation_url(@request.confirmation_token, email: @request.email) %>
+
+<p> Failure to confirm your interest in our waitlist within the next 48 hours will remove your name from this list.
+</p>
+
+<p> Thank you, <br>
+The Cowork Team
+</p>

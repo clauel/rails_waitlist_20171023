@@ -1,0 +1,5 @@
+Hi <%= @request.name %>,
+
+Welcome to The Cowork's waiting list! Click on the link below to join our waiting list:
+
+<%= edit_request_activation_url(@request.activation_token, email: @request.email) %>

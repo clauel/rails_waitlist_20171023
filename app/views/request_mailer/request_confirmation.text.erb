@@ -1,0 +1,12 @@
+Hi <%= @request.name %>,
+
+Thank you for your interest in The Cowork.
+
+You are currently number <%= @request.waitlist_position %> on our waitlist to join The Cowork. Please click the link below to confirm your enrollment :
+
+<%= link_to "I would like to stay on the waitlist", edit_request_confirmation_url(@request.confirmation_token, email: @request.email) %>
+
+Failure to confirm your interest in our waitlist within the next 48 hours will remove your name from this list.
+
+Thank you,
+The Cowork Team

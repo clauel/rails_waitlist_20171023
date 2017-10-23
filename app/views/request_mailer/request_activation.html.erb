@@ -1,0 +1,9 @@
+<h1>The Cowork</h1>
+
+<p>Hi <%= @request.name %>,</p>
+
+<p>
+Welcome to The Cowork's waiting list! Click on the link below to join our waiting list:
+</p>
+
+<%= link_to "Activate", edit_request_activation_url(@request.activation_token, email: @request.email) %>
