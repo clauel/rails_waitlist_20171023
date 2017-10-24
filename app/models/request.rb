@@ -53,7 +53,7 @@ class Request < ApplicationRecord
   # Sends confirmation email in 90 days (request needs to be confirmed every quarter - 92 days max)
   def send_confirmation_email
     create_confirmation_digest
-    RequestMailer.request_confirmation(self).deliver_later(wait_until: 2.minutes.from_now)
+    RequestMailer.request_confirmation(self).deliver_now
   end
 
   def accept!

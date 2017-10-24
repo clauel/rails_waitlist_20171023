@@ -4,7 +4,7 @@ class RequestActivationsController < ApplicationController
     if request && request.authenticated?(:activation, params[:id])
       request.activate
       flash[:success] = "Congratulations, you have joined our waitlist!"
-      request.send_confirmation_email
+      SendConfirmationWorker.perform_in(2.minutes, request.id)
       redirect_to root_url
     else
       flash[:danger] = "Invalid activation link"
