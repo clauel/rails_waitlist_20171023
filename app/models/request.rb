@@ -1,5 +1,5 @@
 class Request < ApplicationRecord
-  attr_accessor :activation_token
+  attr_accessor :activation_token, :confirmation_token
   before_save :downcase_email
   before_create :create_activation_digest
   validates :name, presence: true, length: { maximum: 50 }
@@ -52,7 +52,8 @@ class Request < ApplicationRecord
 
   # Sends confirmation email in 90 days (request needs to be confirmed every quarter - 92 days max)
   def send_confirmation_email
-    RequestMailer.request_confirmation(self).deliver_later(wait_until: 5.minutes.from_now)
+    create_confirmation_digest
+    RequestMailer.request_confirmation(self).deliver_later(wait_until: 2.minutes.from_now)
   end
 
   def accept!
@@ -95,5 +96,6 @@ class Request < ApplicationRecord
     def create_confirmation_digest
       self.confirmation_token  = Request.new_token
       self.confirmation_digest = Request.digest(confirmation_token)
+      self.save
     end
 end
