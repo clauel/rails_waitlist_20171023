@@ -54,7 +54,13 @@ class Request < ApplicationRecord
   def send_confirmation_email
     create_confirmation_digest
     RequestMailer.request_confirmation(self).deliver_now
+    update_attribute(:confirmation_sent_at, Time.zone.now)
   end
+
+  # returns false is the confirmation was sent earlier than 48 hours ago
+  def confirmation_reset_expired?
+      confirmation_sent_at < 48.hours.ago
+    end
 
   def accept!
     update_attribute(:accepted, true)
@@ -65,7 +71,7 @@ class Request < ApplicationRecord
   end
 
   def self.confirmed
-    where(activated: true).where(accepted: false).where("confirmed_at > ?", Time.zone.now-7948800).order(:activated_at)
+    where(activated: true).where(accepted: false).where("confirmed_at >= ?", Time.zone.now - 90.days).order(:activated_at)
   end
 
   def self.accepted
@@ -73,7 +79,7 @@ class Request < ApplicationRecord
   end
 
   def self.expired
-    where(activated: true).where("confirmed_at < ?", Time.zone.now-7948800)
+    where(activated: true).where("confirmed_at < ?", Time.zone.now - 90.days)
   end
 
   def waitlist_position
