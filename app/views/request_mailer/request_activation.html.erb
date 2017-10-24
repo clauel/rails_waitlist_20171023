@@ -3,7 +3,7 @@
 <p>Hi <%= @request.name %>,</p>
 
 <p>
-Welcome to The Cowork's waiting list! Click on the link below to join our waiting list:
+Welcome to The Cowork's waitlist! Click on the link below to join our waitlist:
 </p>
 
-<%= link_to "Activate", edit_request_activation_url(@request.activation_token, email: @request.email) %>
+<%= link_to "Join our waitlist", edit_request_activation_url(@request.activation_token, email: @request.email) %>

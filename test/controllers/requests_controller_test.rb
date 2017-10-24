@@ -2,7 +2,7 @@ require 'test_helper'
 
 class RequestsControllerTest < ActionDispatch::IntegrationTest
   test "should get new" do
-    get requests_new_url
+    get root_url
     assert_response :success
   end
 
