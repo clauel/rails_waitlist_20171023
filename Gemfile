@@ -13,7 +13,7 @@ gem 'bootstrap', '4.0.0.alpha6'
 gem 'popper_js'
 gem 'bcrypt',         '3.1.11'
 gem 'faker',          '1.7.3'
-gem 'figaro'
+gem 'sidekiq'
 
 
 group :development, :test do
