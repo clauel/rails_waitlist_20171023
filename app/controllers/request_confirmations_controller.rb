@@ -6,7 +6,7 @@ class RequestConfirmationsController < ApplicationController
     if @request && @request.authenticated?(:confirmation, params[:id])
       @request.confirm
       flash[:success] = "Thank you for confirming your spot on our waitlist! You are at position #{@request.waitlist_position}."
-      SendConfirmationWorker.perform_in(20.seconds, @request.id)
+      SendConfirmationWorker.perform_in(90.days, @request.id)
       redirect_to root_url
     else
       flash[:danger] = "Invalid activation link"
