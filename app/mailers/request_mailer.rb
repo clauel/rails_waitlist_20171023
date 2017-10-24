@@ -7,7 +7,7 @@ class RequestMailer < ApplicationMailer
   #
   def request_activation(request)
     @request = request
-    mail to: request.email, subject: "Waitlist request activation"
+    mail to: request.email, subject: "The Cowork - Waitlist request activation"
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -17,6 +17,6 @@ class RequestMailer < ApplicationMailer
   #
   def request_confirmation(request)
     @request = request
-    mail to: request.email, subject: "Waitlist confirmation"
+    mail to: request.email, subject: "The Cowork - Waitlist confirmation"
   end
 end
