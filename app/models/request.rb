@@ -6,7 +6,7 @@ class Request < ApplicationRecord
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
     validates :email, presence: true, length: { maximum: 255 },
                       format: { with: VALID_EMAIL_REGEX }
-  validates_uniqueness_of :email, conditions: -> { where("confirmed_at > ?", Time.zone.now-7948800) }
+  validates_uniqueness_of :email, conditions: -> { where("confirmed_at > ?", Time.zone.now - 90.days) }
   validates_uniqueness_of :email, conditions: -> { where(activated: false) }
   VALID_PHONE_REGEX = /[\d\-+() ]+/
   validates :phone, presence: true, length: { minimum: 10, maximum: 20 },
